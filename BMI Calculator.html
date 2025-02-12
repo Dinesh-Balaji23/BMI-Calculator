@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BMI Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('background.jpg') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <h2 class="text-center mb-4">BMI Calculator</h2>
+                <form onsubmit="event.preventDefault(); calculateBMI();">
+                    <div class="mb-3">
+                        <label for="height" class="form-label">Height (in meters):</label>
+                        <input type="number" id="height" class="form-control" placeholder="Enter height" step="0.01">
+                    </div>
+                    <div class="mb-3">
+                        <label for="weight" class="form-label">Weight (in kg):</label>
+                        <input type="number" id="weight" class="form-control" placeholder="Enter weight" step="0.1">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Calculate BMI</button>
+                </form>
+                <h4 class="mt-3 text-center" id="result"></h4>
+                <h5 class="text-center mt-2" id="message"></h5>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function calculateBMI() {
+        let height = parseFloat(document.getElementById("height").value);
+        let weight = parseFloat(document.getElementById("weight").value);
+        let result = document.getElementById("result");
+        let message = document.getElementById("message");
+        if (height > 0 && weight > 0) {
+            let bmi = (weight / (height * height)).toFixed(2);
+            result.textContent = "Your BMI: " + bmi;
+            if (bmi < 18.5) {
+                message.textContent = "You are underweight.";
+                message.className = "text-warning text-center";
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                message.textContent = "You have a normal weight.";
+                message.className = "text-success text-center";
+            } else if (bmi >= 25 && bmi < 29.9) {
+                message.textContent = "You are overweight.";
+                message.className = "text-warning text-center";
+            } else {
+                message.textContent = "You are obese.";
+                message.className = "text-danger text-center";
+            }
+        } else {
+            result.textContent = "Please enter valid height and weight.";
+            message.textContent = "";
+        }
+    }
+</script>
+</body>
+</html>
